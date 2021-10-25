@@ -38,7 +38,11 @@ def find_chapter_info(string_list):
         match = re.findall(regex, string)
         for i in match:
             info.append(i)
-    print(info)
+            info_dic[int(i[8])] = i[11:]
+    return info_dic
+
+    
+   
 
 
 def find_capitalized_words(string_list):
@@ -80,7 +84,7 @@ def find_dates(string_list):
         Please refer to the instructions and be careful about invalid dates!
     """
     dates = []
-    regex = r'((1[0-2]|0[1-9])[\/\-](3[0]|[0-2][0-9])[\/\-]((1[9][0-9]'
+    regex = r'((1[0-2]|0[1-9])[\/\-](3[0]|[0-2][0-9])[\/\-]((1[9][0-9][0-9]|2[0]([01][0-9]|2[0,1])|[0-9][0-9]\b)))'
     for i in string_list:
         match = re.findall(regex, i)
         for a in match:
@@ -114,15 +118,38 @@ class TestAllMethods(unittest.TestCase):
 
 
     def test_find_chapter_info(self):
-        pass
+        string_list = read_file('Harry-potter-txt.txt')
+        info_dic = find_chapter_info(string_list)
+        self.assertEqual(len(info_dic), 6)
+        self.assertEqual(info_dic[1], "Owl Post")
 
     def test_find_capitalized_words(self):
+        string_list = read_file('Harry-potter-txt.txt')
+        capital = find_capitalized_words(string_list)
+        self.assertEqual(len(capital), 64)
+        self.assertEqual(capital[3], 'Aunt Petunia')
+        self.assertEqual(find_capitalized_words(['Hello how are You Doing']), ['Hello You Doing'])
+        self.assertEqual(find_capitalized_words(['hello']), [])
         pass
+
 
     def test_find_urls(self):
+        string_list = read_file('Harry-potter-txt.txt')
+        urls = find_urls(string_list)
+        self.assertEqual(len(urls), 5)
+        self.assertEqual(urls[0], 'https://www.apa.org/')
         pass
 
+
+
+
+
     def test_find_dates(self):
+        string_list = read_file('Harry-potter-txt.txt')
+        dates = find_dates(string_list)
+        self.assertEqual(len(dates), 5)
+        self.assertEqual(find_dates(['07/21/2058, 12-02-20']),['12-02-20'])
+        self.assertEqual(find_dates(['07.21.2058, 07/21/1823']),([]))
         pass
 
 

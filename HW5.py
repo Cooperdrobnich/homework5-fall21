@@ -54,7 +54,7 @@ def find_capitalized_words(string_list):
     regex = r'(?:[A-Z]\w+(?:\s[A-Z][\w-]*)+)'
     for i in string_list:
         match = re.findall(regex, i)
-        for x in i:
+        for x in match:
             capital.append(x)
     return capital
 
@@ -64,7 +64,7 @@ def find_urls(string_list):
     """ Return a list of valid urls in the list of strings """
 
     urls = []
-    regex = r'https?:\/\/www.\w.[c,o].+'
+    regex = r'https?:\/\/www.\w+\.(?:com|org).*'
     for i in string_list:
         match = re.findall(regex, i)
         for a in match:
@@ -122,15 +122,17 @@ class TestAllMethods(unittest.TestCase):
         info_dic = find_chapter_info(string_list)
         self.assertEqual(len(info_dic), 6)
         self.assertEqual(info_dic[1], "Owl Post")
+        self.assertEqual(info_dic[2], "Aunt Marge's Big Mistake")
 
     def test_find_capitalized_words(self):
         string_list = read_file('Harry-potter-txt.txt')
         capital = find_capitalized_words(string_list)
         self.assertEqual(len(capital), 64)
         self.assertEqual(capital[3], 'Aunt Petunia')
-        self.assertEqual(find_capitalized_words(['Hello how are You Doing']), ['Hello You Doing'])
+        self.assertEqual(find_capitalized_words(['Hello how are You Doing']), ['You Doing'])
         self.assertEqual(find_capitalized_words(['hello']), [])
-        pass
+        self.assertEqual(find_capitalized_words(['Hello my name is Coop Drob']), ['Coop Drob'])
+       
 
 
     def test_find_urls(self):
@@ -138,7 +140,7 @@ class TestAllMethods(unittest.TestCase):
         urls = find_urls(string_list)
         self.assertEqual(len(urls), 5)
         self.assertEqual(urls[0], 'https://www.apa.org/')
-        pass
+       
 
 
 

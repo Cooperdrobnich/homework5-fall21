@@ -1,8 +1,8 @@
 # FALL 2021
 # SI 206
 # HW5 - Regular Expressions
-# Name:
-# Who did you work with:　
+# Name: Cooper Drobnich
+# Who did you work with: Adam Brenner and Umang Bhojani
 
 import re
 import os
@@ -31,7 +31,15 @@ def find_chapter_info(string_list):
     a dictionary with the chapter number as the keys and the title of the chapter as the value
     Example output: {1: “Owl Post”, 2: “Aunt Marge's Big Mistak”, … }
     """
-    pass
+    info_dic = {}
+    info = []
+    regex = r'Chapter (?:\d+): (?:.*)'
+    for string in string_list:
+        match = re.findall(regex, string)
+        for i in match:
+            info.append(i)
+    print(info)
+
 
 def find_capitalized_words(string_list):
     """This function finds consecutive capitalized words (at least two words, no punctuations in between). 
@@ -63,6 +71,8 @@ def find_dates(string_list):
 
 ## Extra credit
 def count_mid_str(string_list, string):
+    
+
     """ return a count of the number of times a specified strings appears in the text.
         The matched string should be in the middle of a word. 
         It should not be the start or the end of a word.
@@ -71,8 +81,14 @@ def count_mid_str(string_list, string):
         string -- the stirng to look for, e.g., "be"
         return -- a count of the number of times the string appears in the text
     """
-    pass
-
+    string_mid = []
+    reg = rf'\w{string}\w'
+    for line in string_list:
+       x = re.findall(reg, line)
+       for i in x:
+           string_mid.append(i)
+    count = len(string_mid)
+    return count
 
 # Implement your own tests.
 class TestAllMethods(unittest.TestCase):

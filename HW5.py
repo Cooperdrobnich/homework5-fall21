@@ -159,9 +159,9 @@ class TestAllMethods(unittest.TestCase):
     def test_count_mid_str(self):
         string_list = read_file('Harry-potter-txt.txt')
         self.assertEqual(count_mid_str(string_list, 'bees'), 0)
-        self.assertEqual(count_mid_str(string_list, 'oo'), 27)
-        self.assertEqual(count_mid_str(string_list, 'he'), 57)
-        self.assertEqual(count_mid_str(string_list, 'the'), 8)
+        self.assertEqual(count_mid_str(string_list, 'arr'), 47)
+        self.assertEqual(count_mid_str(string_list, 'th'), 18)
+        
 
 
 

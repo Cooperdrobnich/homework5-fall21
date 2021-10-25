@@ -106,10 +106,11 @@ def count_mid_str(string_list, string):
     """
     string_mid = []
     reg = rf'\w{string}\w'
+    count = 0
     for line in string_list:
-       x = re.findall(reg, line)
-       for i in x:
-           string_mid.append(i)
+        match = re.findall(reg, line)
+        for i in match:
+            string_mid.append(i)
     count = len(string_mid)
     return count
 
@@ -140,7 +141,7 @@ class TestAllMethods(unittest.TestCase):
         urls = find_urls(string_list)
         self.assertEqual(len(urls), 5)
         self.assertEqual(urls[0], 'https://www.apa.org/')
-       
+        self.assertEqual(find_urls(['https://www.youtube.crm/video']), [])
 
 
 
@@ -152,11 +153,15 @@ class TestAllMethods(unittest.TestCase):
         self.assertEqual(len(dates), 5)
         self.assertEqual(find_dates(['07/21/2058, 12-02-20']),['12-02-20'])
         self.assertEqual(find_dates(['07.21.2058, 07/21/1823']),([]))
-        pass
+        
 
 
     def test_count_mid_str(self):
-        pass
+        string_list = read_file('Harry-potter-txt.txt')
+        self.assertEqual(count_mid_str(string_list, 'bees'), 0)
+        self.assertEqual(count_mid_str(string_list, 'oo'), 27)
+        self.assertEqual(count_mid_str(string_list, 'he'), 57)
+        self.assertEqual(count_mid_str(string_list, 'the'), 8)
 
 
 

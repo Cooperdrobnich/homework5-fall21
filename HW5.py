@@ -46,14 +46,28 @@ def find_capitalized_words(string_list):
     For example, in the text we can find Diagon Alley, Professor Remus Lupin as qualified consecutive words.
     Example output: ["Diagon Alley", "Professor Remus Lupin"]  
     """
-    pass
+    capital = []
+    regex = r'(?:[A-Z]\w+(?:\s[A-Z][\w-]*)+)'
+    for i in string_list:
+        match = re.findall(regex, i)
+        for x in i:
+            capital.append(x)
+    return capital
 
 
 
 def find_urls(string_list):
     """ Return a list of valid urls in the list of strings """
 
-    pass
+    urls = []
+    regex = r'https?:\/\/www.\w.[c,o].+'
+    for i in string_list:
+        match = re.findall(regex, i)
+        for a in match:
+            urls.append(a)
+    return urls
+
+
 
 
 def find_dates(string_list):
@@ -65,8 +79,13 @@ def find_dates(string_list):
         mm-dd-yy
         Please refer to the instructions and be careful about invalid dates!
     """
-
-    pass
+    dates = []
+    regex = r'((1[0-2]|0[1-9])[\/\-](3[0]|[0-2][0-9])[\/\-]((1[9][0-9]'
+    for i in string_list:
+        match = re.findall(regex, i)
+        for a in match:
+            dates.append(a[0])
+    return dates
 
 
 ## Extra credit
